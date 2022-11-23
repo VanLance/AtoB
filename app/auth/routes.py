@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import check_password_hash
-from app.forms import LoginForm
+from app.forms import LoginForm, RegisterForm
 from app.models import User,db 
 from flask_login import login_required,login_user
 
@@ -28,4 +28,11 @@ def login():
         raise Exception('Invalid Form Data: Please Check Your Form')
     
     return render_template('signin.html', form = form)
-   
+@auth.route('/signup',methods = ['GET','POST'])  
+def register():
+    form = RegisterForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        new_user = User(first_name=form.first_name.data.lower(),last_name=form.last_name.data.lower(),user_name=form.user_name.data.lower(),email=form.email.data.lower(),password=form.password.data.lower())
+        new_user.commit()
+        return "Welcome To our App... Thanks for registering"
+    return render_template('register.html.j2', form=form)

@@ -16,3 +16,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('password', message="Passwords must Match")])
     submit = SubmitField('Register')
+
+class ServiceForm(FlaskForm):
+    sqare_foot =  StringField("Square Foot", validators=[DataRequired()])
+    requested_service =  StringField("Service Requested", validators=[DataRequired()])
+    extras =  StringField("Additional Services")
