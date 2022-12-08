@@ -1,0 +1,46 @@
+{% extends 'base.html.j2' %}
+{% block content %}
+
+<div class="col-6 offset-3">
+    {% if serviceQuote %}
+        <h2>Quote for Service Requested: </h2>
+        <p>{{ serviceQuote }}</p>
+    {% endif %}
+    {% if extrasQuote %}
+        <h2>Quote for Extra Services Requested: </h2>
+        <p>{{ extrasQuote }}</p>
+    {% endif %}
+    <h1>Services</h1>
+    <form action="/services" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.square_foot.label(class="form-label") }}
+            {{ form.square_foot(class="form-control") }}
+
+            {% for error in form.square_foot.errors %}
+            <small style="color:red;">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            {{ form.requested_service.label(class="form-label") }}
+            {{ form.requested_service(class="form-control") }}
+            {% for error in form.requested_service.errors %}
+            <small style="color:red;">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            {{ form.extras.label(class="form-label",) }}
+            <p>Press Control + Click for multiple options</p>
+            {{ form.extras(class="form-control") }}
+            {% for error in form.extras.errors %}
+            <small style="color:red;">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.submit(class="btn btn-primary") }}
+        
+        </div>
+    </form>
+</div>
+
+{% endblock %}

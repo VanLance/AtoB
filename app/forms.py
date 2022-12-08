@@ -1,8 +1,7 @@
-
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, SelectMultipleField, SelectField
 from wtforms.validators import Email, DataRequired, EqualTo, ValidationError
-from app import app
+
 
 class LoginForm(FlaskForm):
     email=StringField('Email Address', validators=[DataRequired(), Email()])
@@ -18,6 +17,8 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
 class ServiceForm(FlaskForm):
-    sqare_foot =  StringField("Square Foot", validators=[DataRequired()])
-    requested_service =  StringField("Service Requested", validators=[DataRequired()])
-    extras =  StringField("Additional Services")
+    requested_service =  SelectField("Requested Service", choices=['Weekly', 'Biweekly', 'Deep Clean'],validators=[DataRequired()])
+    square_foot =  SelectField("Square Foot", choices=['600','1000','1200','1500','1800','2000','2500','3000','4000','5000','6000'], validators=[DataRequired()])
+    extras =  SelectMultipleField("Extras", choices=['Polishing: $25','Cabinets: $20','Base Boards: $25','Refridgerator: $15','Windows: $4','Skylights: $8','Shampoo Carpets: $40'], coerce=str, option_widget=None)
+    submit = SubmitField('Submit Service')
+

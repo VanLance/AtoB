@@ -1,4 +1,4 @@
-{% extends './base.html.j2' %}
+{% extends 'base.html.j2' %}
 
 {% block title %}
     Register
@@ -7,7 +7,7 @@
 {% block content %}
     <div class="col-6 offset-3">
         <h1>Register</h1>
-        <form action="/register" method="POST">
+        <form action="/signup" method="POST">
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 {{ form.email.label(class="form-label") }}
