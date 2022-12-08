@@ -14,7 +14,8 @@ def services():
         print(sFoot,frequency,extras,type(sFoot))
         newService = Service(sFoot,frequency,user_id=current_user.id)
         newService.commit()
-        serviceQuote,extrasQuote, = Service.costs[sFoot][frequency], sum( [int(extra.split('$')[-1]) for extra in extras] if extras else (0,0) ) 
-        return render_template('services.html.j2',form = form, serviceQuote=serviceQuote, extrasQuote=extrasQuote)
+        
+        extrasQuote = sum( [int(extra.split('$')[-1]) for extra in extras] if extras else (0,0) ) 
+        return render_template('services.html.j2',form = form, extrasQuote=extrasQuote)
 
     return render_template('services.html.j2',form = form)
