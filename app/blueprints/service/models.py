@@ -48,6 +48,7 @@ class Additional(db.Model):
     windows = db.Column(db.Boolean)
     skylights = db.Column(db.Boolean)
     carpetShampoo = db.Column(db.Boolean)
+    quote = db.Column(db.Integer, nullable=False)
     owner = db.Column(db.ForeignKey('user.id'),nullable=False)
     
     extras = {
@@ -59,10 +60,23 @@ class Additional(db.Model):
         'skylights': 8,
         'carpetShampoo': 40,
     }
-
+    
+    def my_init(self, extraList):
+        extraList=set(extraList)
+        extraInit={
+                'polishing': self.polish ,
+                'cabinets': self.cabinets,
+                'base boards': self.baseBoards,
+                'refridgerator': self.fridge,
+                'windows': self.windows,
+                'skylights': self.skylights,
+                'shampoo carpet': self.carpetShampoo,
+            }
+        for extra in extraInit:
+            extraInit[extra] = True if extra in extraList else False
+    
     def commit(self):
         db.session.add(self)
         db.session.commit()
-    
-    # def total(self):
+
 

@@ -14,7 +14,7 @@ db.init_app(app)
 migrate.init_app(app,db)
 login.init_app(app)
 
-login.login_view = 'login'
+login.login_view = 'auth.login'
 login.login_message = 'Please make sure you are logged in!'
 login.login_message_category = 'warning'
 

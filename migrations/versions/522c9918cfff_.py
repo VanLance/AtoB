@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f44f209d6df7
+Revision ID: 522c9918cfff
 Revises: 
-Create Date: 2022-12-07 19:07:30.675007
+Create Date: 2022-12-08 16:44:59.713387
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f44f209d6df7'
+revision = '522c9918cfff'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,13 +22,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(), nullable=True),
     sa.Column('last_name', sa.String(), nullable=True),
-    sa.Column('user_name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('password', sa.String(), nullable=False),
     sa.Column('token', sa.String(), nullable=True),
     sa.Column('created_on', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('user_name')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
     op.create_index(op.f('ix_user_token'), 'user', ['token'], unique=True)
@@ -41,6 +39,7 @@ def upgrade():
     sa.Column('windows', sa.Boolean(), nullable=True),
     sa.Column('skylights', sa.Boolean(), nullable=True),
     sa.Column('carpetShampoo', sa.Boolean(), nullable=True),
+    sa.Column('quote', sa.Integer(), nullable=False),
     sa.Column('owner', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['owner'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -48,10 +47,10 @@ def upgrade():
     op.create_table('service',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('square_foot', sa.Integer(), nullable=False),
-    sa.Column('requested_service', sa.Integer(), nullable=False),
+    sa.Column('requested_service', sa.String(), nullable=False),
     sa.Column('quote', sa.Integer(), nullable=False),
-    sa.Column('owner', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['owner'], ['user.id'], ),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

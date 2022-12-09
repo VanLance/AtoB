@@ -13,9 +13,10 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String, unique=True, index=True)
     created_on = db.Column(db.DateTime, default=dt.utcnow)
     user_service = db.relationship('Service', backref='owner', lazy=True)
+    user_additional = db.relationship('Additional', backref='extra_owner', lazy=True)
 
     def __repr__(self):
-        return f'{self.user_name}'
+        return f'{self.first_name} {self.last_name} {self.id}'
     
     def commit(self):
         db.session.add(self)
@@ -25,7 +26,7 @@ class User(UserMixin, db.Model):
     def hash_password(self, original_password):
         self.password = generate_password_hash(original_password)
 
-    def check_hashed_password(self, login_password):
+    def check_password(self, login_password):
         return check_password_hash(self.password, login_password)   
 
 

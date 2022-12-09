@@ -2,13 +2,23 @@
 {% block content %}
 
 <div class="col-6 offset-3">
-    {% if serviceQuote %}
-        <h2>Quote for Service Requested: </h2>
-        <p>{{ serviceQuote }}</p>
+    {% with messages = get_flashed_messages(with_categories = true) %}
+    {% if messages %}
+    <div class=flashes>
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
     {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+    
     {% if extrasQuote %}
-        <h2>Quote for Extra Services Requested: </h2>
-        <p>{{ extrasQuote }}</p>
+    <h2>Quote for Extra Services Requested: </h2>
+    <p>{{ extrasQuote }}</p>
     {% endif %}
     <h1>Services</h1>
     <form action="/services" method="POST">
@@ -38,7 +48,7 @@
         </div>
         <div>
             {{ form.submit(class="btn btn-primary") }}
-        
+
         </div>
     </form>
 </div>
